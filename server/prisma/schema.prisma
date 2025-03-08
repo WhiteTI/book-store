@@ -9,3 +9,124 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Book {
+  id          String   @id @default(uuid())
+  title       String
+  author      String
+  artist      String?
+  image       String?
+  cover       String?
+  price       String?
+  description String
+  ageRating   String   @map("age_rating")
+  pageCount   Int      @map("page_count")
+  ISBN        String
+  releaseDate DateTime @map("release_date")
+
+  Genres     Genre[]
+  Series     Series?  @relation(fields: [seriesId], references: [id])
+  seriesId   String?
+  BookType   BookType @relation(fields: [bookTypeId], references: [id])
+  bookTypeId String
+
+  createAt DateTime @default(now()) @map("create_at")
+  updateAt DateTime @updatedAt @map("update_at")
+}
+
+model BookType {
+  id    String @id @default(uuid())
+  title String
+  Book  Book[]
+
+  createAt DateTime @default(now()) @map("create_at")
+  updateAt DateTime @updatedAt @map("update_at")
+}
+
+model Genre {
+  id    String @id @default(uuid())
+  title String
+
+  Book Book[]
+
+  createAt DateTime @default(now()) @map("create_at")
+  updateAt DateTime @updatedAt @map("update_at")
+}
+
+model Series {
+  id    String @id @default(uuid())
+  title String
+
+  Book          Book[]
+  seriesId      String?
+  relatedSeries Series?  @relation("SerieseToSeries", fields: [seriesId], references: [id])
+  Series        Series[] @relation("SerieseToSeries")
+
+  createAt DateTime @default(now()) @map("create_at")
+  updateAt DateTime @updatedAt @map("update_at")
+}
+
+model User {
+  id            String    @id
+  name          String
+  email         String
+  emailVerified Boolean
+  image         String?
+  createdAt     DateTime
+  updatedAt     DateTime
+  role          String?
+  banned        Boolean?
+  banReason     String?
+  banExpires    DateTime?
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
+}
+
+model Session {
+  id             String   @id
+  expiresAt      DateTime
+  token          String
+  createdAt      DateTime
+  updatedAt      DateTime
+  ipAddress      String?
+  userAgent      String?
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  impersonatedBy String?
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
