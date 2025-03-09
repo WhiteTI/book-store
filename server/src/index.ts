@@ -5,6 +5,7 @@ import bookTypes from "./routes/bookTypes";
 import genres from "./routes/genres";
 import series from "./routes/series";
 import books from "./routes/books";
+import swagger from "@elysiajs/swagger";
 
 // const betterAuthView = ({request, error}: Context) => {
 //     const BETTER_AUTH_ACCEPT_METHODS = ['GET', 'POST', 'PATCH', 'DELETE']
@@ -19,6 +20,7 @@ import books from "./routes/books";
 const app = new Elysia()
     // .all('/api/auth/*', (ctx) => betterAuthView(ctx))
     .use(cors())
+    .use(swagger())
     .use(betterAuth)
     .use(bookTypes)
     .use(genres)
