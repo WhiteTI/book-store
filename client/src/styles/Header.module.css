@@ -1,0 +1,7 @@
+.bg {
+    background-color: var(--main-color);
+}
+
+.navMenu {
+    height: 90px;
+}
