@@ -10,10 +10,18 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --main-color: #6ebe44;
+  --second-color: #111;
 }
 
 body {
   margin: 0;
   min-width: 320px;
   min-height: 100vh;
+}
+
+.container {
+  max-width: 1440px;
+  margin: 0 auto;
 }
