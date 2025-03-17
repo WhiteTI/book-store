@@ -1,6 +1,14 @@
+import Header from "./components/Header.tsx";
+import AppRouter from "./router/AppRouter.tsx";
 
 function App() {
-    return (<div>/ᐠ｡ꞈ｡ᐟ\ test</div>)
+    return (
+        <>
+            <Header />
+            <AppRouter />
+        </>
+
+    )
 }
 
 export default App
