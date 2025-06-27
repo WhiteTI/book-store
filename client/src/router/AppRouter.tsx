@@ -4,10 +4,10 @@ const AppRouter = () => {
     return (
         <Routes>
             <Route index />
-            <Route path='category/:type'/>
+            <Route path='/category/:type'/>
             <Route path='/genres'/>
-            <Route path='series/:title'/>
-            <Route path='titles/:title'/>
+            <Route path='/series/:title'/>
+            <Route path='/titles/:title'/>
         </Routes>
     );
 };
